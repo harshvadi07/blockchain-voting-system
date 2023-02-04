@@ -1,5 +1,32 @@
-const voteContractAddress = "0x29838cCA1465F4aA56d9a2b64E253b4459137547";
+const voteContractAddress = "0x52328Beb2e8738945E8825A4deFd7e81163361A7";
+
 const voteContractABI = [
+  {
+    inputs: [],
+    name: "listCandidates",
+    outputs: [
+      {
+        internalType: "string[]",
+        name: "",
+        type: "string[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string[]",
+        name: "_candidates",
+        type: "string[]",
+      },
+    ],
+    name: "setCandidates",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
   {
     inputs: [],
     name: "voteA",
@@ -28,10 +55,9 @@ const voteContractABI = [
     type: "function",
   },
 ];
+const provider = new ethers.providers.Web3Provider(window.ethereum, "goerli");
 let voteContract;
 let signer;
-
-const provider = new ethers.providers.Web3Provider(window.ethereum, "goerli");
 
 provider.send("eth_requestAccounts", []).then(() => {
   provider.listAccounts().then((accounts) => {
@@ -55,4 +81,21 @@ async function voteB() {
 async function getWinner() {
   const winner = await voteContract.winner();
   document.getElementsByClassName("winner")[0].innerHTML = winner;
+}
+
+async function setData() {
+  const mycandidates = ["a", "b", "c"];
+  const setsad = voteContract.setCandidates(mycandidates);
+  await setsad;
+}
+
+let candids;
+async function getData() {
+  candids = await voteContract.listCandidates();
+  console.log(candids);
+  const candidates = document.getElementsByClassName("candidates")[0];
+
+  for (let i = 0; i < candids.length; i++) {
+    candidates.innerHTML += "<h1>" + candids[i] + "</h1></br>";
+  }
 }
