@@ -10,18 +10,32 @@
   <title>Document</title>
 </head>
 
-<body style="background-color: blue;">
-  <div class="container" style="display: block;">
-    <form>
-      <input type="text" id="name" name="name" placeholder="Candidate Name" style="display:block" />
-      <input type="text" id="partyName" name="partyName" placeholder="Party Name" style="display:block" />
-      <input type="number" id="age" name="age" placeholder="Age" style="display:block" />
-      <input type="text" id="city" name="city" placeholder="City" style="display:block; margin-top:20px" />
-      <button class="btn btn-info" type="button" onclick="addCandidate()">Submit</button>
-    </form>
+<body style="background-color: #2e3b5b;">
+  <div class="nav">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" style="color: white;" href="index.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" style="background-color: #eac65a; color: black;" href="login.html">Admin</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" style="color: white;" href="voter.html">Vote</a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li> -->
+    </ul>
   </div>
-  <div>
-    <button class="btn btn-success" type="button" onclick="declareResults()">End Voting</button>
+  <div style="width: 100vw; height: 90vh; display: flex; justify-content: center;">
+    <form style="position: absolute; top: 50%;">
+      <input type="text" id="name" name="name" placeholder="Candidate Name" />
+      <input type="text" id="partyName" name="partyName" placeholder="Party Name" />
+      <input type="number" id="age" name="age" placeholder="Age" />
+      <input type="text" id="city" name="city" placeholder="City" />
+      <button class="btn btn-info" type="button" onclick="addCandidate()">Submit</button>
+      <button class="btn btn-success" type="button" onclick="declareResults()">End Voting</button>
+    </form>
   </div>
   <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
   <script src="./addCandidate.js"></script>

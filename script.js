@@ -216,9 +216,7 @@ async function getResultStatus() {
   if (status === 1) {
     window.location.href = "/results.html";
   } else {
-    document.getElementsByClassName("results")[0].innerHTML = "";
-    document.getElementsByClassName("results")[0].innerHTML =
-      "Results are not declared yet.";
+    alert("Results are not declared yet!");
   }
 }
 

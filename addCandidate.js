@@ -179,4 +179,5 @@ async function addCandidate() {
 
 async function declareResults() {
   await voteContract.declareResults();
+  alert("Voting has been ended!");
 }
