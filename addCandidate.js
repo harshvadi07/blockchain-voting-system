@@ -168,63 +168,15 @@ provider.send("eth_requestAccounts", []).then(() => {
   });
 });
 
-async function listCandidates() {
-  const candidates = await voteContract.getCandidates();
-  const candidatesDisplay = document.querySelector(".candidates");
-  candidatesDisplay.innerHTML = "";
+async function addCandidate() {
+  const name = document.getElementById("name").value;
+  const partyName = document.getElementById("partyName").value;
+  const age = document.getElementById("age").value;
+  const city = document.getElementById("city").value;
 
-  let id = 1;
-
-  candidates.forEach(function (candidate) {
-    const candidateDiv = document.createElement("div");
-    candidateDiv.classList.add("candidateDiv");
-    candidateDiv.classList.add("row");
-    candidateDiv.classList.add("text-center");
-    candidateDiv.innerHTML += "Name: " + candidate.name + "</br>";
-    candidateDiv.innerHTML += "Party: " + candidate.partyName + "</br>";
-    candidateDiv.innerHTML += "Age: " + candidate.age + "</br>";
-    candidateDiv.innerHTML += "City: " + candidate.city + "</br>";
-    candidateDiv.innerHTML += `<button class="vote-btn btn btn-primary" onclick = vote(${id})>Vote</button>`;
-
-    candidatesDisplay.appendChild(candidateDiv);
-    id = id + 1;
-  });
+  await voteContract.addCandidate(name, partyName, age, city);
 }
 
-async function vote(id) {
-  await voteContract.voteCandidate(id);
-}
-
-async function getResultStatus() {
-  let status = await voteContract.getStatus();
-  status = parseInt(status, 16);
-
-  if (status === 1) {
-    window.location.href = "/results.html";
-  } else {
-    document.getElementsByClassName("results")[0].innerHTML = "";
-    document.getElementsByClassName("results")[0].innerHTML =
-      "Results are not declared yet.";
-  }
-}
-
-async function getResults() {
-  const candidates = await voteContract.getCandidates();
-  const candidatesDisplay = document.querySelector(".candidates");
-  candidatesDisplay.innerHTML = "";
-
-  let id = 1;
-
-  candidates.forEach(function (candidate) {
-    const candidateDiv = document.createElement("div");
-    candidateDiv.classList.add("candidateDiv");
-    candidateDiv.classList.add("row");
-    candidateDiv.classList.add("text-center");
-    candidateDiv.innerHTML += "Name: " + candidate.name + "</br>";
-    candidateDiv.innerHTML += "Party: " + candidate.partyName + "</br>";
-    candidateDiv.innerHTML += "Votes: " + candidate.votes + "</br>";
-
-    candidatesDisplay.appendChild(candidateDiv);
-    id = id + 1;
-  });
+async function declareResults() {
+  await voteContract.declareResults();
 }
