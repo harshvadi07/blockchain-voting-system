@@ -1,54 +1,132 @@
-const voteContractAddress = "0x52328Beb2e8738945E8825A4deFd7e81163361A7";
+const voteContractAddress = "0x2E25c4f2E30485E6bc6da3A4fcFf313ccE53C170";
 
 const voteContractABI = [
   {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_partyName",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "_age",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "_city",
+        type: "string",
+      },
+    ],
+    name: "addCandidate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_id",
+        type: "uint256",
+      },
+    ],
+    name: "voteCandidate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
-    name: "listCandidates",
+    name: "getCandidates",
     outputs: [
       {
-        internalType: "string[]",
+        components: [
+          {
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "partyName",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "age",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "city",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "votes",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct vote.Candidate[]",
         name: "",
-        type: "string[]",
+        type: "tuple[]",
       },
     ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "string[]",
-        name: "_candidates",
-        type: "string[]",
-      },
-    ],
-    name: "setCandidates",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
-    name: "voteA",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "voteB",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "winner",
+    name: "getWinner",
     outputs: [
       {
-        internalType: "string",
+        components: [
+          {
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "partyName",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "age",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "city",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "votes",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct vote.Candidate",
         name: "",
-        type: "string",
+        type: "tuple",
       },
     ],
     stateMutability: "view",
@@ -70,32 +148,12 @@ provider.send("eth_requestAccounts", []).then(() => {
   });
 });
 
-async function voteA() {
-  await voteContract.voteA();
-}
-
-async function voteB() {
-  await voteContract.voteB();
-}
-
 async function getWinner() {
-  const winner = await voteContract.winner();
-  document.getElementsByClassName("winner")[0].innerHTML = winner;
-}
+  const winner = await voteContract.getWinner();
+  const displayWinner = document.querySelector(".winner");
 
-async function setData() {
-  const mycandidates = ["a", "b", "c"];
-  const setsad = voteContract.setCandidates(mycandidates);
-  await setsad;
-}
-
-let candids;
-async function getData() {
-  candids = await voteContract.listCandidates();
-  console.log(candids);
-  const candidates = document.getElementsByClassName("candidates")[0];
-
-  for (let i = 0; i < candids.length; i++) {
-    candidates.innerHTML += "<h1>" + candids[i] + "</h1></br>";
-  }
+  displayWinner.innerHTML += "<h1>Name: " + winner.name + "</h1>";
+  displayWinner.innerHTML += "<h1>Party: " + winner.partyName + "</h1>";
+  displayWinner.innerHTML += "<h1>City: " + winner.city + "</h1>";
+  displayWinner.innerHTML += "<h1>Votes: " + winner.votes + "</h1>";
 }
