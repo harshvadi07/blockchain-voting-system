@@ -1,4 +1,4 @@
-const voteContractAddress = "0x72967b3722b702fbc5218d3681e8F5574abFa672";
+const voteContractAddress = "0xA62f82358CC735efad05B4EF15c6831FCcA30dd9";
 
 const voteContractABI = [
   {
@@ -175,6 +175,9 @@ async function addCandidate() {
   const city = document.getElementById("city").value;
 
   await voteContract.addCandidate(name, partyName, age, city);
+  alert("Candidate added successfully");
+
+  location.reload();
 }
 
 async function declareResults() {

@@ -1,4 +1,4 @@
-const voteContractAddress = "0x72967b3722b702fbc5218d3681e8F5574abFa672";
+const voteContractAddress = "0xA62f82358CC735efad05B4EF15c6831FCcA30dd9";
 
 const voteContractABI = [
   {
@@ -169,9 +169,17 @@ provider.send("eth_requestAccounts", []).then(() => {
 });
 
 async function listCandidates() {
+  let status = await voteContract.getStatus();
+  status = parseInt(status, 16);
+
   const candidates = await voteContract.getCandidates();
   const candidatesDisplay = document.querySelector(".candidates");
   candidatesDisplay.innerHTML = "";
+
+  if (status === 1) {
+    document.getElementsByClassName("status")[0].innerHTML +=
+      "Voting period is over.";
+  }
 
   if (candidates.length === 0) {
     candidatesDisplay.innerHTML = "No candidates";
@@ -188,14 +196,11 @@ async function listCandidates() {
     candidateDiv.innerHTML += "Party: " + candidate.partyName + "</br>";
     candidateDiv.innerHTML += "Age: " + candidate.age + "</br>";
     candidateDiv.innerHTML += "City: " + candidate.city + "</br>";
-    candidateDiv.innerHTML += `<button class="vote-btn btn btn-primary" onclick = vote(${id})>Vote</button>`;
+    candidateDiv.innerHTML += `<button class="vote-btn btn" onclick = vote(${id})>Vote</button>`;
 
     candidatesDisplay.appendChild(candidateDiv);
     id = id + 1;
   });
-
-  let status = await voteContract.getStatus();
-  status = parseInt(status, 16);
 
   if (status === 1) {
     const voteBtns = document.getElementsByClassName("vote-btn");
@@ -221,22 +226,26 @@ async function getResultStatus() {
 }
 
 async function getResults() {
-  const candidates = await voteContract.getCandidates();
-  const candidatesDisplay = document.querySelector(".candidates");
-  candidatesDisplay.innerHTML = "";
+  if (parseInt(await voteContract.getStatus(), 16) === 1) {
+    const candidates = await voteContract.getCandidates();
+    const candidatesDisplay = document.querySelector(".candidates");
+    candidatesDisplay.innerHTML = "";
 
-  let id = 1;
+    let id = 1;
 
-  candidates.forEach(function (candidate) {
-    const candidateDiv = document.createElement("div");
-    candidateDiv.classList.add("candidateDiv");
-    candidateDiv.classList.add("row");
-    candidateDiv.classList.add("text-center");
-    candidateDiv.innerHTML += "Name: " + candidate.name + "</br>";
-    candidateDiv.innerHTML += "Party: " + candidate.partyName + "</br>";
-    candidateDiv.innerHTML += "Votes: " + candidate.votes + "</br>";
+    candidates.forEach(function (candidate) {
+      const candidateDiv = document.createElement("div");
+      candidateDiv.classList.add("candidateDiv");
+      candidateDiv.classList.add("row");
+      candidateDiv.classList.add("text-center");
+      candidateDiv.innerHTML += "Name: " + candidate.name + "</br>";
+      candidateDiv.innerHTML += "Party: " + candidate.partyName + "</br>";
+      candidateDiv.innerHTML += "Votes: " + candidate.votes + "</br>";
 
-    candidatesDisplay.appendChild(candidateDiv);
-    id = id + 1;
-  });
+      candidatesDisplay.appendChild(candidateDiv);
+      id = id + 1;
+    });
+  } else {
+    alert("Results are not declared yet.");
+  }
 }
