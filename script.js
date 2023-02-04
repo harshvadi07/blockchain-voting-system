@@ -1,4 +1,4 @@
-const voteContractAddress = "0x84e55d6DEE61CDbA3bb59dE621EB6Ecd241cDdAb";
+const voteContractAddress = "0x72967b3722b702fbc5218d3681e8F5574abFa672";
 
 const voteContractABI = [
   {
@@ -173,6 +173,10 @@ async function listCandidates() {
   const candidatesDisplay = document.querySelector(".candidates");
   candidatesDisplay.innerHTML = "";
 
+  if (candidates.length === 0) {
+    candidatesDisplay.innerHTML = "No candidates";
+  }
+
   let id = 1;
 
   candidates.forEach(function (candidate) {
@@ -189,6 +193,16 @@ async function listCandidates() {
     candidatesDisplay.appendChild(candidateDiv);
     id = id + 1;
   });
+
+  let status = await voteContract.getStatus();
+  status = parseInt(status, 16);
+
+  if (status === 1) {
+    const voteBtns = document.getElementsByClassName("vote-btn");
+    for (let i = 0; i < voteBtns.length; i++) {
+      voteBtns[i].classList.add("disabled");
+    }
+  }
 }
 
 async function vote(id) {
