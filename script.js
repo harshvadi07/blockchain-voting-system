@@ -256,34 +256,90 @@ async function getResults() {
     const candidatesDisplay = document.querySelector(".candidates");
     candidatesDisplay.innerHTML = "";
 
-    let id = 1;
+    var table = document.createElement("table");
+    let th1 = document.createElement("th");
+    let th2 = document.createElement("th");
+    let th3 = document.createElement("th");
+    let th4 = document.createElement("th");
+    let head1 = document.createTextNode("Name");
+    let head2 = document.createTextNode("Party");
+    let head3 = document.createTextNode("City");
+    let head4 = document.createTextNode("Votes");
+    th1.appendChild(head1);
+    th2.appendChild(head2);
+    th3.appendChild(head3);
+    th4.appendChild(head4);
+    table.appendChild(th1);
+    table.appendChild(th2);
+    table.appendChild(th3);
+    table.appendChild(th4);
+
     candidates.forEach(function (candidate) {
-      const candidateDiv = document.createElement("div");
-      candidateDiv.classList.add("candidateDiv");
-      candidateDiv.classList.add("row");
-      candidateDiv.classList.add("text-center");
-      candidateDiv.innerHTML += "Name: " + candidate.name + "</br>";
-      candidateDiv.innerHTML += "Party: " + candidate.partyName + "</br>";
-      candidateDiv.innerHTML += "Votes: " + candidate.votes + "</br>";
-      candidatesDisplay.appendChild(candidateDiv);
-      id = id + 1;
+      var tr = document.createElement("tr");
+
+      var td1 = document.createElement("td");
+      var td2 = document.createElement("td");
+      var td3 = document.createElement("td");
+      var td4 = document.createElement("td");
+
+      var text1 = document.createTextNode(candidate.name);
+      var text2 = document.createTextNode(candidate.partyName);
+      var text3 = document.createTextNode(candidate.city);
+      var text4 = document.createTextNode(candidate.votes);
+
+      td1.appendChild(text1);
+      td2.appendChild(text2);
+      td3.appendChild(text3);
+      td4.appendChild(text4);
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      tr.appendChild(td3);
+      tr.appendChild(td4);
+
+      table.appendChild(tr);
     });
+    candidatesDisplay.appendChild(table);
 
     const parties = await voteContract.getPartyVotes();
     const partyDisplay = document.querySelector(".parties");
     partyDisplay.innerHTML = "";
     partyDisplay.innerHTML += `<h3 class=my-2 style="color:white">Summary</h3>`;
+    var table = document.createElement("table");
+    th1 = document.createElement("th");
+    th2 = document.createElement("th");
+    head1 = document.createTextNode("Party");
+    head2 = document.createTextNode("Votes");
+    th1.appendChild(head1);
+    th2.appendChild(head2);
+    table.appendChild(th1);
+    table.appendChild(th2);
 
     parties.forEach(function (party) {
-      const partyDiv = document.createElement("div");
-      partyDiv.classList.add("candidateDiv");
-      partyDiv.classList.add("row");
-      partyDiv.classList.add("text-center");
-      partyDiv.innerHTML += "Party: " + party.partyName + "</br>";
-      partyDiv.innerHTML += "Votes: " + party.partyVotes + "</br>";
+      //   const partyDiv = document.createElement("div");
+      //   partyDiv.classList.add("candidateDiv");
+      //   partyDiv.classList.add("row");
+      //   partyDiv.classList.add("text-center");
+      //   partyDiv.innerHTML += "Party: " + party.partyName + "</br>";
+      //   partyDiv.innerHTML += "Votes: " + party.partyVotes + "</br>";
 
-      partyDisplay.appendChild(partyDiv);
+      //   partyDisplay.appendChild(partyDiv);
+
+      var tr = document.createElement("tr");
+
+      var td1 = document.createElement("td");
+      var td2 = document.createElement("td");
+
+      var text1 = document.createTextNode(party.partyName);
+      var text2 = document.createTextNode(party.partyVotes);
+
+      td1.appendChild(text1);
+      td2.appendChild(text2);
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+
+      table.appendChild(tr);
     });
+    partyDisplay.appendChild(table);
   } else {
     alert("Results are not declared yet.");
   }
