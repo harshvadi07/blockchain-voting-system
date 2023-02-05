@@ -2,7 +2,7 @@
 Vote Era is an decentralize voting web application built using frontend of Web2.0 and backend of Web3.0
 
 # Front-End 
-Here we have used HTML,CSS & Javascript which can be replaced with ReactJS for more code usability. But our goal here was to create a transparent voting app where the main play is of backend.
+Here we have used HTML,CSS & Javascript for Front End. But our goal here was to create a transparent voting app where the main play is of backend.
 
 # Back-End
 In backend along with javascript we have used solidity for making the smart contract which gets activated during the time of voting. Also the vote counting and update happens in the smart contract which is on ethereum blockchain.
