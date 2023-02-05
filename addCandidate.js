@@ -1,4 +1,4 @@
-const voteContractAddress = "0x181Bd9Aa34F606D211Ec9c7dd36FE4BF605F950E";
+const voteContractAddress = "0xa8936a90306855f9cf2910a6E74523eC2c71A970";
 
 const voteContractABI = [
   {
