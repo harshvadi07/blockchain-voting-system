@@ -1,4 +1,4 @@
-const voteContractAddress = "0xA62f82358CC735efad05B4EF15c6831FCcA30dd9";
+const voteContractAddress = "0xEc92F21F438e586786Feb7D8Ed6BA67536117Aee";
 
 const voteContractABI = [
   {
@@ -87,6 +87,31 @@ const voteContractABI = [
           },
         ],
         internalType: "struct vote.Candidate[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getPartyVotes",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string",
+            name: "partyName",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "partyVotes",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct vote.Party[]",
         name: "",
         type: "tuple[]",
       },

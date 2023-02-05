@@ -1,4 +1,4 @@
-const voteContractAddress = "0xA62f82358CC735efad05B4EF15c6831FCcA30dd9";
+const voteContractAddress = "0xEc92F21F438e586786Feb7D8Ed6BA67536117Aee";
 
 const voteContractABI = [
   {
@@ -87,6 +87,31 @@ const voteContractABI = [
           },
         ],
         internalType: "struct vote.Candidate[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getPartyVotes",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string",
+            name: "partyName",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "partyVotes",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct vote.Party[]",
         name: "",
         type: "tuple[]",
       },
@@ -232,7 +257,6 @@ async function getResults() {
     candidatesDisplay.innerHTML = "";
 
     let id = 1;
-
     candidates.forEach(function (candidate) {
       const candidateDiv = document.createElement("div");
       candidateDiv.classList.add("candidateDiv");
@@ -241,9 +265,24 @@ async function getResults() {
       candidateDiv.innerHTML += "Name: " + candidate.name + "</br>";
       candidateDiv.innerHTML += "Party: " + candidate.partyName + "</br>";
       candidateDiv.innerHTML += "Votes: " + candidate.votes + "</br>";
-
       candidatesDisplay.appendChild(candidateDiv);
       id = id + 1;
+    });
+
+    const parties = await voteContract.getPartyVotes();
+    const partyDisplay = document.querySelector(".parties");
+    partyDisplay.innerHTML = "";
+    partyDisplay.innerHTML += `<h3 class=my-2 style="color:white">Summary</h3>`;
+
+    parties.forEach(function (party) {
+      const partyDiv = document.createElement("div");
+      partyDiv.classList.add("candidateDiv");
+      partyDiv.classList.add("row");
+      partyDiv.classList.add("text-center");
+      partyDiv.innerHTML += "Party: " + party.partyName + "</br>";
+      partyDiv.innerHTML += "Votes: " + party.partyVotes + "</br>";
+
+      partyDisplay.appendChild(partyDiv);
     });
   } else {
     alert("Results are not declared yet.");
