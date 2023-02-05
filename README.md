@@ -8,3 +8,4 @@ Here we have used HTML,CSS & Javascript which can be replaced with ReactJS for m
 In backend along with javascript we have used solidity for making the smart contract which gets activated during the time of voting. Also the vote counting and update happens in the smart contract which is on ethereum blockchain.
 
 Thus all in all it is used for transparent and decentralized voting app DApp which will be required in the near-future due to ongoing malicious practices in current centralized voting system.
+.
